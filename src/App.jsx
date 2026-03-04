@@ -1,35 +1,136 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useCallback } from "react";
+import StoryTray from "./components/StoryTray";
+import StoryViewer from "./components/StoryViewer";
+import AddStoryModal from "./components/AddStoryModal";
+import { generateMockStories } from "./data/mockStories";
+import { useStoryExpiry } from "./hooks/useStoryExpiry";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+const STORAGE_KEY = "stories_user_uploads";
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+function loadStoredStories() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
 }
 
-export default App
+function saveStoriesToStorage(uploadedStories) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(uploadedStories));
+  } catch (e) {
+    console.warn("localStorage save failed (possibly too large):", e);
+  }
+}
+
+export default function App() {
+  const [stories, setStories] = useState(() => [
+    ...generateMockStories(),
+    ...loadStoredStories(),
+  ]);
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // ── Expiry ────────────────────────────────────────────────────────────────
+  const removeStory = useCallback((id) => {
+    setStories(prev => {
+      const updated = prev.filter(s => s.id !== id);
+      saveStoriesToStorage(updated.filter(s => s.isUploaded));
+      return updated;
+    });
+  }, []);
+
+  useStoryExpiry({ stories, onExpire: removeStory });
+
+  // ── Delete ────────────────────────────────────────────────────────────────
+  const handleDelete = useCallback((id) => {
+    removeStory(id);
+    // If the viewer is open and we deleted the active story, close it
+    setStories(prev => {
+      if (viewerOpen && prev[activeIndex]?.id === id) {
+        setViewerOpen(false);
+      }
+      return prev;
+    });
+  }, [removeStory, viewerOpen, activeIndex]);
+
+  // ── Add story ─────────────────────────────────────────────────────────────
+  const handleModalSubmit = useCallback(({ username, color, imageBase64 }) => {
+    const newStory = {
+      id: Date.now(),
+      username,
+      color,
+      img: imageBase64,
+      seen: false,
+      isUploaded: true,
+      createdAt: Date.now(),
+    };
+    setStories(prev => {
+      const updated = [...prev, newStory];
+      saveStoriesToStorage(updated.filter(s => s.isUploaded));
+      return updated;
+    });
+    setModalOpen(false);
+  }, []);
+
+  // ── Viewer controls ───────────────────────────────────────────────────────
+  const openStory = useCallback((index) => {
+    setActiveIndex(index);
+    setViewerOpen(true);
+  }, []);
+
+  const closeViewer = useCallback(() => setViewerOpen(false), []);
+
+  const markSeen = useCallback((index) => {
+    setStories(prev =>
+      prev.map((s, i) => i === index ? { ...s, seen: true } : s)
+    );
+  }, []);
+
+  const goNext = useCallback(() => {
+    setActiveIndex(prev => {
+      const next = prev + 1;
+      if (next >= stories.length) { setViewerOpen(false); return 0; }
+      return next;
+    });
+  }, [stories.length]);
+
+  const goPrev = useCallback(() => {
+    setActiveIndex(prev => Math.max(0, prev - 1));
+  }, []);
+
+  return (
+    <div className="app">
+      <div className="app-inner">
+        <h2 className="app-title">Stories</h2>
+        <StoryTray
+          stories={stories}
+          onStoryClick={openStory}
+          onAddClick={() => setModalOpen(true)}
+          onDelete={handleDelete}
+        />
+      </div>
+
+      {modalOpen && (
+        <AddStoryModal
+          onSubmit={handleModalSubmit}
+          onClose={() => setModalOpen(false)}
+        />
+      )}
+
+      {viewerOpen && (
+        <StoryViewer
+          stories={stories}
+          activeIndex={activeIndex}
+          onClose={closeViewer}
+          onNext={goNext}
+          onPrev={goPrev}
+          onSeen={markSeen}
+        />
+      )}
+    </div>
+  );
+}
