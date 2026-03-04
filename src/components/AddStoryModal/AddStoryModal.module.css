@@ -1,0 +1,334 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 680px;
+  padding: 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+/* ── Body: form + preview side by side ── */
+.body {
+  display: flex;
+  gap: 28px;
+}
+
+.form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── Field label ── */
+.fieldLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  margin-top: 8px;
+}
+
+/* ── Dropzone ── */
+.dropzone {
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  overflow: hidden;
+  background: #fafafa;
+}
+
+.dropzone:hover {
+  border-color: #6C63FF;
+  background: #f3f2ff;
+}
+
+.dragging {
+  border-color: #6C63FF;
+  background: #ede9ff;
+}
+
+.hasImage {
+  border-style: solid;
+  border-color: #6C63FF;
+}
+
+.dropzoneImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dropzoneHint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #aaa;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.dropzoneIcon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+/* ── Text input ── */
+.textInput {
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: sans-serif;
+}
+
+.textInput:focus {
+  border-color: #6C63FF;
+}
+
+/* ── Color picker ── */
+.colorRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.colorSwatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2.5px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.colorSwatch:hover {
+  transform: scale(1.15);
+}
+
+.colorSelected {
+  border-color: #1a1a1a;
+  transform: scale(1.15);
+}
+
+.randomBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px dashed #bbb;
+  background: #f5f5f5;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.randomBtn:hover {
+  background: #ede9ff;
+  border-color: #6C63FF;
+}
+
+/* ── Error ── */
+.error {
+  font-size: 12px;
+  color: #e74c3c;
+  margin-top: 4px;
+}
+
+/* ── Preview panel ── */
+.preview {
+  width: 160px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.previewLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  align-self: flex-start;
+}
+
+.previewBubble {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.previewRing {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  padding: 2px;
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+
+.previewAvatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2.5px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 20px;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+.previewUsername {
+  font-size: 11px;
+  color: #333;
+  max-width: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Story card mini preview ── */
+.previewCard {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #111;
+  position: relative;
+}
+
+.previewCardImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.previewCardEmpty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  font-size: 11px;
+  text-align: center;
+  padding: 8px;
+}
+
+.previewProgressBar {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: 6px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.previewProgressFill {
+  width: 40%;
+  height: 100%;
+  background: #fff;
+  border-radius: 2px;
+}
+
+.previewCardUser {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #fff;
+  font-size: 11px;
+  font-family: sans-serif;
+  font-weight: 600;
+}
+
+.previewCardAvatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ── Actions ── */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.cancelBtn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1.5px solid #ddd;
+  background: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: sans-serif;
+  color: #555;
+  transition: background 0.15s;
+}
+
+.cancelBtn:hover {
+  background: #f5f5f5;
+}
+
+.submitBtn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #6C63FF;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: sans-serif;
+  transition: background 0.15s;
+}
+
+.submitBtn:hover {
+  background: #574fd6;
+}
