@@ -1,0 +1,29 @@
+.btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px dashed #bbb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #999;
+  background: #f8f8f8;
+}
+
+.label {
+  font-size: 11px;
+  color: #999;
+}
