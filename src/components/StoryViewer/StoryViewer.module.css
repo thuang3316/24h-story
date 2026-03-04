@@ -1,0 +1,83 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.viewer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: auto;
+  max-height: 100vh;
+  overflow: hidden;
+  background: #000;
+}
+
+.media {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 24px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 20;
+  padding: 8px;
+}
+
+.userInfo {
+  position: absolute;
+  top: 34px;
+  left: 16px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
+}
+
+.username {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: sans-serif;
+}
+
+.tapLeft,
+.tapRight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 35%;
+  z-index: 5;
+  cursor: pointer;
+}
+
+.tapLeft  { left: 0; }
+.tapRight { right: 0; }
