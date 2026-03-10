@@ -18,6 +18,7 @@
   max-height: 100vh;
   overflow: hidden;
   background: #000;
+  -webkit-touch-callout: none; 
 }
 
 .media {
