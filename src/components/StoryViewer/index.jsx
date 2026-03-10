@@ -22,6 +22,7 @@ export default function StoryViewer({
 
     const handleTouchStart = (e) => {
       touchStartX.current = e.touches[0].clientX;
+      setIsPaused(true);
     };
 
     const handleTouchEnd = (e) => {
@@ -29,6 +30,7 @@ export default function StoryViewer({
       const dx = e.changedTouches[0].clientX - touchStartX.current;
       if (Math.abs(dx) > 50) dx < 0 ? onNext() : onPrev();
       touchStartX.current = null;
+      setIsPaused(false);
     };
 
     el.addEventListener("touchstart", handleTouchStart, { passive: true });
