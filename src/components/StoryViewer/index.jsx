@@ -59,7 +59,13 @@ export default function StoryViewer({
           <span className={styles.username}>{story.username}</span>
         </div>
 
-        <img className={styles.media} src={story.img} alt={`${story.username}'s story`} />
+        <img 
+          className={styles.media} 
+          src={story.img} 
+          alt={`${story.username}'s story` } 
+          onContextMenu={(e) => e.preventDefault()} 
+          draggable={false}
+        />
 
         <div className={styles.tapLeft}  onClick={onPrev} />
         <div className={styles.tapRight} onClick={onNext} />
