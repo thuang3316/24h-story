@@ -34,7 +34,7 @@ export default function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // ── Expiry ────────────────────────────────────────────────────────────────
+  // expiry
   const removeStory = useCallback((id) => {
     setStories(prev => {
       const updated = prev.filter(s => s.id !== id);
@@ -45,10 +45,9 @@ export default function App() {
 
   useStoryExpiry({ stories, onExpire: removeStory });
 
-  // ── Delete ────────────────────────────────────────────────────────────────
+  // delete
   const handleDelete = useCallback((id) => {
     removeStory(id);
-    // If the viewer is open and we deleted the active story, close it
     setStories(prev => {
       if (viewerOpen && prev[activeIndex]?.id === id) {
         setViewerOpen(false);
@@ -57,7 +56,7 @@ export default function App() {
     });
   }, [removeStory, viewerOpen, activeIndex]);
 
-  // ── Add story ─────────────────────────────────────────────────────────────
+  // add story
   const handleModalSubmit = useCallback(({ username, color, imageBase64 }) => {
     const newStory = {
       id: Date.now(),
@@ -76,7 +75,7 @@ export default function App() {
     setModalOpen(false);
   }, []);
 
-  // ── Viewer controls ───────────────────────────────────────────────────────
+  // viewer control
   const openStory = useCallback((index) => {
     setActiveIndex(index);
     setViewerOpen(true);

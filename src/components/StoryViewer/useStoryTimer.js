@@ -9,9 +9,8 @@ export function useStoryTimer({ activeIndex, isPaused, onComplete }) {
 
   const tick = useCallback((timestamp) => {
     if (!startRef.current) startRef.current = timestamp;
-    const progress = Math.min((timestamp - startRef.current) / STORY_DURATION, 1);
+    const progress = Math.min((timestamp - startRef.current) / STORY_DURATION, 1); // a number between 0 and 1
 
-    // Direct DOM mutation — avoids re-rendering React 60x/sec
     if (fillRef.current) {
       fillRef.current.style.transform = `scaleX(${progress})`;
     }

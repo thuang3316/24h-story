@@ -1,14 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
-/**
- * Virtualizes a horizontally scrolling list using IntersectionObserver.
- * Accepts an external containerRef so it can share the same DOM node
- * with other hooks (e.g. useScrollArrows).
- *
- * Returns:
- *  - getItemRef : ref callback factory for each item
- *  - isVisible  : function(index) => boolean
- */
 export function useVirtualTray(itemCount, containerRef) {
   const itemRefs = useRef({});
   const [visibleSet, setVisibleSet] = useState(() => new Set());

@@ -4,7 +4,7 @@ export default function ProgressBars({ total, activeIndex, fillRef }) {
   return (
     <div className={styles.bars}>
       {Array.from({ length: total }).map((_, i) => (
-        <div key={i} className={styles.bar}>
+        <div key={`${activeIndex}-${i}`} className={styles.bar}>
           <div
             className={styles.fill}
             ref={i === activeIndex ? fillRef : null}
