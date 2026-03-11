@@ -64,7 +64,6 @@ export default function AddStoryModal({ onSubmit, onClose }) {
     onSubmit({ username: username.trim(), color, imageBase64 });
   };
 
-  // Close on backdrop click
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) onClose();
   };
@@ -75,10 +74,8 @@ export default function AddStoryModal({ onSubmit, onClose }) {
         <h3 className={styles.title}>Add Your Story</h3>
 
         <div className={styles.body}>
-          {/* ── Left: Form ── */}
           <div className={styles.form}>
 
-            {/* Image upload */}
             <label className={styles.fieldLabel}>Image</label>
             <div
               className={`${styles.dropzone} ${isDragging ? styles.dragging : ""} ${imageBase64 ? styles.hasImage : ""}`}
@@ -104,7 +101,6 @@ export default function AddStoryModal({ onSubmit, onClose }) {
               />
             </div>
 
-            {/* Username */}
             <label className={styles.fieldLabel}>Username</label>
             <input
               className={styles.textInput}
@@ -115,7 +111,6 @@ export default function AddStoryModal({ onSubmit, onClose }) {
               onChange={e => setUsername(e.target.value)}
             />
 
-            {/* Avatar color */}
             <label className={styles.fieldLabel}>Avatar Color</label>
             <div className={styles.colorRow}>
               {PRESET_COLORS.map(c => (
@@ -135,11 +130,9 @@ export default function AddStoryModal({ onSubmit, onClose }) {
             {error && <p className={styles.error}>{error}</p>}
           </div>
 
-          {/* ── Right: Live Preview ── */}
           <div className={styles.preview}>
             <p className={styles.previewLabel}>Preview</p>
 
-            {/* Bubble preview */}
             <div className={styles.previewBubble}>
               <div className={styles.previewRing}>
                 <div className={styles.previewAvatar} style={{ backgroundColor: color }}>
@@ -149,14 +142,12 @@ export default function AddStoryModal({ onSubmit, onClose }) {
               <span className={styles.previewUsername}>{username || "username"}</span>
             </div>
 
-            {/* Story card mini preview */}
             <div className={styles.previewCard}>
               {imageBase64 ? (
                 <img src={imageBase64} alt="story preview" className={styles.previewCardImg} />
               ) : (
                 <div className={styles.previewCardEmpty}>No image yet</div>
               )}
-              {/* Mini progress bar */}
               <div className={styles.previewProgressBar}>
                 <div className={styles.previewProgressFill} />
               </div>
@@ -170,7 +161,6 @@ export default function AddStoryModal({ onSubmit, onClose }) {
           </div>
         </div>
 
-        {/* Actions */}
         <div className={styles.actions}>
           <button className={styles.cancelBtn} onClick={onClose}>Cancel</button>
           <button className={styles.submitBtn} onClick={handleSubmit}>Add Story</button>

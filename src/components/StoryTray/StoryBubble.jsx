@@ -9,7 +9,6 @@ const StoryBubble = memo(function StoryBubble({ story, onClick, onDelete }) {
   const longPressTimer = useRef(null);
   const timeLeft = getTimeRemaining(story.createdAt);
 
-  // ── Long-press (mobile) ───────────────────────────────────────────────────
   const handleTouchStart = useCallback(() => {
     longPressTimer.current = setTimeout(() => {
       setShowDelete(true);
@@ -20,14 +19,12 @@ const StoryBubble = memo(function StoryBubble({ story, onClick, onDelete }) {
     clearTimeout(longPressTimer.current);
   }, []);
 
-  // ── Delete ────────────────────────────────────────────────────────────────
   const handleDelete = useCallback((e) => {
     e.stopPropagation(); // prevent opening the story
     setShowDelete(false);
     onDelete(story.id);
   }, [onDelete, story.id]);
 
-  // Dismiss delete button when clicking elsewhere
   const handleBlur = useCallback(() => {
     setTimeout(() => setShowDelete(false), 150);
   }, []);
@@ -57,7 +54,6 @@ const StoryBubble = memo(function StoryBubble({ story, onClick, onDelete }) {
         )}
       </button>
 
-      {/* Delete button — only rendered for uploaded stories */}
       {story.isUploaded && showDelete && (
         <button
           className={styles.deleteBtn}

@@ -1,4 +1,3 @@
-/* Wrapper needed so the delete button can be positioned relative to the bubble */
 .wrapper {
   position: relative;
   display: flex;
@@ -20,7 +19,6 @@
   transition: transform 0.15s;
 }
 
-/* Slight scale-down when delete is showing to give room for the ✕ */
 .active .bubble {
   transform: scale(0.92);
 }
